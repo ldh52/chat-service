@@ -1,1 +1,3 @@
-spring.application.name=chat-service
+spring:
+  application:
+    name: chat-service
