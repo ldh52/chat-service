@@ -6,8 +6,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: 79907193843150f94343f368aa5f4122
-            client-secret: ZOd6Jf3cxszZEY2WygX36f7qf82tvs56
+            client-id: 
+            client-secret: 
             scope:
               - profile_nickname
               - acoount_email
