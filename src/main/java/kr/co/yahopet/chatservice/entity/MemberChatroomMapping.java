@@ -7,12 +7,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class MemberChatroomMapping {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_chattroom_mapping_id")
+    @Column(name = "member_chatroom_mapping_id")
     @Id
     Long id;
 
@@ -20,7 +28,7 @@ public class MemberChatroomMapping {
     @ManyToOne
     Member member;
 
-    @JoinColumn(name = "chat_room_id")
+    @JoinColumn(name = "chatroom_id")
     @ManyToOne
-    ChatRoom chatRoom;
+    Chatroom chatroom;
 }
