@@ -16,7 +16,7 @@ create database chat_service;
 
 # 실습에 사용할 mysql user를 하나 생성하고 권한을 줍니다.
 create user 'service_user'@'%' identified by 'service_user';<br>
-GRANT ALL PRIVILEGES ON *.* TO 'service_user'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'service_user'@'%';  // 편집을 열어 (*.*) 확인할 것
 
 # 생성항 user가 잘 생성되었는지 확인합니다.
 select * from mysql.user where user = 'service_user';
