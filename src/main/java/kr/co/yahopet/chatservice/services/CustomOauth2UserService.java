@@ -34,8 +34,8 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
     private Member registerMember(Map<String, Object> attributeMap) {
         Member member = Member.builder()
-            .email((String) attributeMap.get("account_email")) // 수정된 부분
-            .nickname((String) ((Map) attributeMap.get("profile")).get("profile_nickname"))
+            .email((String) attributeMap.get("email")) // 수정된 부분
+            .nickname((String) ((Map) attributeMap.get("profile")).get("nickname"))
             .name((String) attributeMap.get("name"))
             .phoneNumber((String) attributeMap.get("phone_number"))
             .gender(Gender.valueOf(((String) attributeMap.get("gender")).toUpperCase()))

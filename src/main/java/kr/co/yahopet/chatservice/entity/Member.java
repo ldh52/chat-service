@@ -32,5 +32,4 @@ public class Member {
     String phoneNumber;
     LocalDate birthDay;
     String role;
-
 }
