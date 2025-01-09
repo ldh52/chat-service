@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.co.yahopet.chatservice.entity.Member;
 import kr.co.yahopet.chatservice.enums.Gender;
 import kr.co.yahopet.chatservice.repositories.MemberRepository;
+import kr.co.yahopet.chatservice.vos.CustomOauth2User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -29,7 +30,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         Member member = memberRepository.findByEmail(email)
             .orElseGet(() -> registerMember(attributeMap));
 
-        return oAuth2User;
+        return new CustomOauth2User(member, oAuth2User.getAttributes());
     }
 
     private Member registerMember(Map<String, Object> attributeMap) {

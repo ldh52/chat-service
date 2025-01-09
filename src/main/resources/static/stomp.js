@@ -11,7 +11,7 @@ stompClient.onConnect = (frame) => {
   stompClient.publish({
     destination: "/pub/chats",
     body: JSON.stringify(
-        {'sender': $("#username").val(), 'message': "connected"})
+        {'message': "connected"})
   })
 };
 
@@ -49,7 +49,7 @@ function sendMessage() {
   stompClient.publish({
     destination: "/pub/chats",
     body: JSON.stringify(
-        {'sender': $("#username").val(), 'message': $("#message").val()})
+        {'message': $("#message").val()})
   });
   $("#message").val("")
 }
