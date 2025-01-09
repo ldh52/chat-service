@@ -15,7 +15,7 @@ mysql -u root -p
 create database chat_service;
 
 # 실습에 사용할 mysql user를 하나 생성하고 권한을 줍니다.
-create user 'service_user'@'%' identified by 'service_user';
+create user 'service_user'@'%' identified by 'service_user';<br>
 grant all privileges on *.* to 'service_user'@'%';
 
 # 생성항 user가 잘 생성되었는지 확인합니다.
