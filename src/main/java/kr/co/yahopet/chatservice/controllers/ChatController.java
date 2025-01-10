@@ -1,6 +1,7 @@
 package kr.co.yahopet.chatservice.controllers;
 
 import java.util.List;
+import kr.co.yahopet.chatservice.dtos.ChatroomDto;
 import kr.co.yahopet.chatservice.entity.Chatroom;
 import kr.co.yahopet.chatservice.services.ChatService;
 import kr.co.yahopet.chatservice.vos.CustomOauth2User;
@@ -23,9 +24,11 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping
-    public Chatroom createChatroom(@AuthenticationPrincipal CustomOauth2User user,
+    public ChatroomDto createChatroom(@AuthenticationPrincipal CustomOauth2User user,
         @RequestParam String title) {
-        return chatService.createChatroom(user.getMember(), title);
+        Chatroom chatroom = chatService.createChatroom(user.getMember(), title);
+
+        return ChatroomDto.from(chatroom);
     }
 
     @PostMapping("/{chatroomId}")
@@ -41,7 +44,11 @@ public class ChatController {
     }
 
     @GetMapping
-    public List<Chatroom> chatroomList(@AuthenticationPrincipal CustomOauth2User user) {
-        return chatService.chatroomList(user.getMember());
+    public List<ChatroomDto> chatroomList(@AuthenticationPrincipal CustomOauth2User user) {
+        List<Chatroom> chatroomList = chatService.chatroomList(user.getMember());
+
+        return chatroomList.stream()
+            .map(ChatroomDto::from)
+            .toList();
     }
 }

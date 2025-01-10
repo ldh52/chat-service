@@ -34,10 +34,38 @@
     <div class="col-md-12">
       <form class="form-inline">
         <div class="form-group">
+          <label for="create">Chatroom</label>
+          <input type="text" id="chatroom_id" class="form-control" disabled="disabled"
+                 placeholder="Chatroom id">
+          <input type="text" id="chatroom_title" class="form-control" placeholder="Chatroom title">
+        </div>
+        <button id="create" class="btn btn-default" disabled="disabled" type="button">Create
+        </button>
+        <button id="leave" class="btn btn-default" disabled="disabled" type="button">Leave</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table id="chatrooms" class="table table-striped">
+        <thead>
+        <tr>
+          <th>Chatrooms</th>
+        </tr>
+        </thead>
+        <tbody id="chatroom-list">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form class="form-inline">
+        <div class="form-group">
           <label for="send">Message</label>
           <input type="text" id="message" class="form-control" placeholder="message to send">
         </div>
-        <button id="send" class="btn btn-default" type="button">Send</button>
+        <button id="send" class="btn btn-default" disabled="disabled" type="button">Send</button>
       </form>
     </div>
   </div>
