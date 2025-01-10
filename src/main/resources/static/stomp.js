@@ -83,7 +83,7 @@ function showChatrooms() {
 }
 
 function renderChatrooms(chatrooms) {
-  $("#chatroom-list").html();
+  $("#chatroom-list").html("");
   for (let i = 0; i < chatrooms.length; i++) {
     $("#chatrooms-list").append(
         "<tr onclick='joinChatroom(" + chatrooms[i].id + ")'><td>"
@@ -98,7 +98,7 @@ let subscription;
 
 function enterChatroom(chatroomId, newMember) {
   $("chatroom-id").val(chatroomId);
-  $("messages").html("");
+  // $("messages").html("");
   $("conversation").show();
   $("send").prop("disabled", false);
   $("leave").prop("disabled", false);
@@ -166,7 +166,7 @@ $(function () {
   $("form").on('submit', (e) => e.preventDefault());
   $("#connect").click(() => connect());
   $("#disconnect").click(() => disconnect());
-  $("create").click(() => createChatroom());
-  $("leave").click(() => leaveChatroom());
+  $("#create").click(() => createChatroom());
+  $("#leave").click(() => leaveChatroom());
   $("#send").click(() => sendMessage());
 });
