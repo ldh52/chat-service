@@ -4,18 +4,16 @@ import java.util.Collection;
 import java.util.List;
 import kr.co.yahopet.chatservice.entity.Member;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@Getter
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private Member member;
-
-    public Member getMember() {
-        return this.member;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
