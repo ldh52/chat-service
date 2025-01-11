@@ -2,18 +2,17 @@ package kr.co.yahopet.chatservice.vos;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import kr.co.yahopet.chatservice.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Getter
-@AllArgsConstructor
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails extends CustomOauth2User implements UserDetails {
 
-    private Member member;
+    public CustomUserDetails(Member member, Map<String, Object> attributeMap) {
+        super(member, attributeMap);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

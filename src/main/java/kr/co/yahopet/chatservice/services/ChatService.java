@@ -2,6 +2,7 @@ package kr.co.yahopet.chatservice.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import kr.co.yahopet.chatservice.dtos.ChatroomDto;
 import kr.co.yahopet.chatservice.entity.Chatroom;
 import kr.co.yahopet.chatservice.entity.Member;
 import kr.co.yahopet.chatservice.entity.MemberChatroomMapping;
@@ -112,5 +113,12 @@ public class ChatService {
 
     public List<Message> getMessageList(Long chatroomId) {
         return messageRepository.findAllByChatroomId(chatroomId);
+    }
+
+    @Transactional(readOnly = true)
+    public ChatroomDto getChatroom(Long chatroomId) {
+        Chatroom chatroom = chatroomRepository.findById(chatroomId).get();
+
+        return ChatroomDto.from(chatroom);
     }
 }
