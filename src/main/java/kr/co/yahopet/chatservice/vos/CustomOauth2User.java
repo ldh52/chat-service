@@ -28,6 +28,6 @@ public class CustomOauth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return this.member.getNickname();
+        return this.member.getNickName();
     }
 }

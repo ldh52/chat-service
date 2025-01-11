@@ -59,7 +59,7 @@ public class ChatController {
     public List<ChatMessage> getMessageList(@PathVariable Long chatroomId) {
         List<Message> messageList = chatService.getMessageList(chatroomId);
         return messageList.stream()
-            .map(message -> new ChatMessage(message.getMember().getNickname(), message.getText()))
+            .map(message -> new ChatMessage(message.getMember().getNickName(), message.getText()))
             .toList();
     }
 }
