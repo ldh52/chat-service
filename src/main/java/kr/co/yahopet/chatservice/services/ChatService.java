@@ -75,7 +75,13 @@ public class ChatService {
             member.getId());
 
         return memberChatroomMappingList.stream()
-            .map(MemberChatroomMapping::getChatroom)
+            .map(memberChatroomMapping -> {
+                Chatroom chatroom = memberChatroomMapping.getChatroom();
+                chatroom.setHasNewMessage(
+                    messageRepository.existsByChatroomIdAndCreatedAtAfter(chatroom.getId(),
+                        memberChatroomMapping.getLastCheckedAt()));
+                return chatroom;
+            })
             .toList();
     }
 

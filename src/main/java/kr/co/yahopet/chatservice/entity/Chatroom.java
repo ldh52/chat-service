@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Builder
@@ -32,6 +34,10 @@ public class Chatroom {
     Set<MemberChatroomMapping> memberChatroomMappingSet;
 
     LocalDateTime createdAt;
+
+    @Setter
+    @Transient
+    Boolean hasNewMessage;
 
     public MemberChatroomMapping addMember(Member member) {
         if (this.getMemberChatroomMappingSet() == null) {
