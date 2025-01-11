@@ -5,8 +5,10 @@ import java.util.List;
 import kr.co.yahopet.chatservice.entity.Chatroom;
 import kr.co.yahopet.chatservice.entity.Member;
 import kr.co.yahopet.chatservice.entity.MemberChatroomMapping;
+import kr.co.yahopet.chatservice.entity.Message;
 import kr.co.yahopet.chatservice.repositories.ChatroomRepository;
 import kr.co.yahopet.chatservice.repositories.MemberChatroomMappingRepository;
+import kr.co.yahopet.chatservice.repositories.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class ChatService {
 
     private final ChatroomRepository chatroomRepository;
     private final MemberChatroomMappingRepository memberChatroomMappingRepository;
+    private final MessageRepository messageRepository;
 
     public Chatroom createChatroom(Member member, String title) {
         Chatroom chatroom = Chatroom.builder()
@@ -67,7 +70,7 @@ public class ChatService {
         return true;
     }
 
-    public List<Chatroom> chatroomList(Member member) {
+    public List<Chatroom> getChatroomList(Member member) {
         List<MemberChatroomMapping> memberChatroomMappingList = memberChatroomMappingRepository.findByMemberId(
             member.getId());
 
@@ -76,4 +79,19 @@ public class ChatService {
             .toList();
     }
 
+    public Message saveMessage(Member member, Long chatroomId, String text) {
+        Chatroom chatroom = chatroomRepository.findById(chatroomId).get();
+
+        Message message = Message.builder()
+            .text(text)
+            .member(member)
+            .chatroom(chatroom)
+            .build();
+
+        return messageRepository.save(message);
+    }
+
+    public List<Message> getMessageList(Long chatroomId) {
+        return messageRepository.findAllByChatroomId(chatroomId);
+    }
 }
