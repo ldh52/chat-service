@@ -34,4 +34,8 @@ public class MemberChatroomMapping {
     Chatroom chatroom;
 
     LocalDateTime lastCheckedAt;
+
+    public void updateLastCheckedAt() {
+        this.lastCheckedAt = LocalDateTime.now();
+    }
 }

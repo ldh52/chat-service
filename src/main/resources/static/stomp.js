@@ -120,7 +120,7 @@ function enterChatroom(chatroomId, newMember) {
   $("leave").prop("disabled", false);
   toggleNewMessageIcon(chatroomId, false);
 
-  if (subscription != undefined) {
+  if (subscription !== undefined) {
     subscription.unsubscribe();
   }
 
@@ -163,10 +163,12 @@ function showMessage(chatMessage) {
 }
 
 function joinChatroom(chatroomId) {
+  let currentChatroomId = $("#chatroom-id").val();
+
   $.ajax({
     type: 'POST',
     dataType: 'json',
-    url: '/chats/' + chatroomId,
+    url: '/chats/' + chatroomId + getRequestParam(currentChatroomId),
     success: function (data) {
       console.log('data: ', data);
       enterChatroom(chatroomId, data);
@@ -176,6 +178,14 @@ function joinChatroom(chatroomId) {
       console.log('error: ' + error);
     },
   })
+}
+
+function getRequestParam(currentChatroomId) {
+  if (currentChatroomId === "") {
+    return "";
+  }
+
+  return "?currentChatroomId=" + currentChatroomId;
 }
 
 function leaveChatroom() {
