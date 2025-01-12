@@ -3,7 +3,7 @@ package kr.co.yahopet.chatservice.controllers;
 import java.security.Principal;
 import java.util.Map;
 import kr.co.yahopet.chatservice.dtos.ChatMessage;
-import kr.co.yahopet.chatservice.entity.Message;
+import kr.co.yahopet.chatservice.entities.Message;
 import kr.co.yahopet.chatservice.services.ChatService;
 import kr.co.yahopet.chatservice.vos.CustomOauth2User;
 import lombok.RequiredArgsConstructor;

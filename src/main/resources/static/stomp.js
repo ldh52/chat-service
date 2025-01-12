@@ -1,10 +1,13 @@
+// STOMP 클라이언트 객체 생성, WebSocket 브로커 URL 설정
 const stompClient = new StompJs.Client({
   brokerURL: 'ws://localhost:8080/stomp/chats'
 });
 
+// STOMP 연결 성공 시 호출되는 콜백 함수
 stompClient.onConnect = (frame) => {
   setConnected(true);
   showChatrooms()
+  // stompClient.subscribe('/sub/chats/news',
   stompClient.subtree('/sub/chats/news',
       (chatMessage) => {
         toggleNewMessageIcon(JSON.parse(chatMessage.body), true);
@@ -20,31 +23,37 @@ function toggleNewMessageIcon(chatroomId, toggle) {
   }
 }
 
+// WebSocket 연결 에러 발생 시 호출되는 콜백 함수
 stompClient.onWebSocketError = (error) => {
   console.error('Error with websocket', error);
 };
 
+// STOMP 프로토콜 오류 발생 시 호출되는 콜백 함수
 stompClient.onStompError = (frame) => {
   console.error('Broker reported error: ' + frame.headers['message']);
   console.error('Additional details: ' + frame.body);
 };
 
+// 연결 상태를 UI에 반영하는 함수
 function setConnected(connected) {
   $("#connect").prop("disabled", connected);
   $("#disconnect").prop("disabled", !connected);
   $("#create").prop("disabled", !connected);
 }
 
+// STOMP 연결을 활성화하는 함수
 function connect() {
   stompClient.activate();
 }
 
+// STOMP 연결을 비활성화하는 함수
 function disconnect() {
   stompClient.deactivate();
   setConnected(false);
   console.log("Disconnected");
 }
 
+// 메시지를 발행하는 함수
 function sendMessage() {
   let chatroomId = $("#chatroom-id").val();
   stompClient.publish({
@@ -52,7 +61,8 @@ function sendMessage() {
     body: JSON.stringify(
         {'message': $("#message").val()})
   });
-  $("#message").val("")
+  // STOMP 프로토콜 오류 발생 시 호출되는 콜백 함수
+  // $("#message").val("")
 }
 
 function createChatroom() {
@@ -126,10 +136,12 @@ function enterChatroom(chatroomId, newMember) {
 
   subscription = stompClient.subscribe('/sub/chats/' + chatroomId,
       (chatMessage) => {
+        // 수신된 메시지를 화면에 표시
         showMessage(JSON.parse(chatMessage.body));
       });
 
   if (newMember) {
+    // 연결 후 특정 경로("/pub/chats")로 메시지를 발행하여 연결 메시지를 알림
     stompClient.publish({
       destination: "/pub/chats/" + chatroomId,
       body: JSON.stringify(
@@ -156,7 +168,9 @@ function showMessages(chatRoomId) {
   })
 }
 
+// 수신된 메시지를 대화창에 표시하는 함수
 function showMessage(chatMessage) {
+  // 메시지를 테이블의 새로운 행으로 추가
   $("#messages").append(
       "<tr><td>" + chatMessage.sender + " : " + chatMessage.message
       + "</td></tr>");
@@ -213,6 +227,7 @@ function exitChatroom(chatroomId) {
   $("#leave").prop("disabled", true);
 }
 
+// 페이지 로드 시 이벤트 핸들러 등록
 $(function () {
   $("form").on('submit', (e) => e.preventDefault());
   $("#connect").click(() => connect());

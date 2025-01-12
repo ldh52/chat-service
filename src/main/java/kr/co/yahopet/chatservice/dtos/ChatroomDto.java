@@ -1,7 +1,7 @@
 package kr.co.yahopet.chatservice.dtos;
 
 import java.time.LocalDateTime;
-import kr.co.yahopet.chatservice.entity.Chatroom;
+import kr.co.yahopet.chatservice.entities.Chatroom;
 
 public record ChatroomDto(
     Long id,

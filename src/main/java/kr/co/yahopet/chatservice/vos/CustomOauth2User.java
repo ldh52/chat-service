@@ -3,7 +3,7 @@ package kr.co.yahopet.chatservice.vos;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import kr.co.yahopet.chatservice.entity.Member;
+import kr.co.yahopet.chatservice.entities.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

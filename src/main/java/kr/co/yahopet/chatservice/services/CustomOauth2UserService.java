@@ -3,7 +3,7 @@ package kr.co.yahopet.chatservice.services;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-import kr.co.yahopet.chatservice.entity.Member;
+import kr.co.yahopet.chatservice.entities.Member;
 import kr.co.yahopet.chatservice.enums.Gender;
 import kr.co.yahopet.chatservice.repositories.MemberRepository;
 import kr.co.yahopet.chatservice.vos.CustomOauth2User;

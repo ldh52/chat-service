@@ -1,6 +1,5 @@
-package kr.co.yahopet.chatservice.entity;
+package kr.co.yahopet.chatservice.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,15 +14,17 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class MemberChatroomMapping {
+public class Message {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_chatroom_mapping_id")
+    @JoinColumn(name = "message_id")
     @Id
     Long id;
+
+    String text;
 
     @JoinColumn(name = "member_id")
     @ManyToOne
@@ -33,9 +34,6 @@ public class MemberChatroomMapping {
     @ManyToOne
     Chatroom chatroom;
 
-    LocalDateTime lastCheckedAt;
+    LocalDateTime createdAt;
 
-    public void updateLastCheckedAt() {
-        this.lastCheckedAt = LocalDateTime.now();
-    }
 }

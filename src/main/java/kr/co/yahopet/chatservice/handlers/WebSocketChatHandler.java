@@ -12,7 +12,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Slf4j
 @Component
-public class WebSocketHandler extends TextWebSocketHandler {
+public class WebSocketChatHandler extends TextWebSocketHandler {
 
     final Map<String, WebSocketSession> webSocketSessionMap = new ConcurrentHashMap<>();
 

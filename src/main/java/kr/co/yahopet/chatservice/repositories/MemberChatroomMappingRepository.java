@@ -2,7 +2,7 @@ package kr.co.yahopet.chatservice.repositories;
 
 import java.util.List;
 import java.util.Optional;
-import kr.co.yahopet.chatservice.entity.MemberChatroomMapping;
+import kr.co.yahopet.chatservice.entities.MemberChatroomMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberChatroomMappingRepository extends

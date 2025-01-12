@@ -1,7 +1,7 @@
 package kr.co.yahopet.chatservice.repositories;
 
 import java.util.Optional;
-import kr.co.yahopet.chatservice.entity.Member;
+import kr.co.yahopet.chatservice.entities.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {

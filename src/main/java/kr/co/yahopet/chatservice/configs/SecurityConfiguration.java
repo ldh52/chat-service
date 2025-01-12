@@ -6,7 +6,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,9 +19,7 @@ public class SecurityConfiguration {
         httpSecurity
             .authorizeHttpRequests(request -> request.anyRequest().authenticated())
             .oauth2Login(Customizer.withDefaults())
-            .csrf(AbstractHttpConfigurer::disable);
-//            .csrf(csrf -> csrf.disable());
-
+            .csrf(csrf -> csrf.disable());
         return httpSecurity.build();
     }
 
@@ -34,10 +31,10 @@ public class SecurityConfiguration {
             .securityMatcher("/consultants/**", "/login")
             .authorizeHttpRequests(request -> request
                 .requestMatchers(HttpMethod.POST, "/consultants").permitAll()
-                .anyRequest().hasRole("CONSULTANT"))
+                .anyRequest().hasRole("CONSULTANT")
+            )
             .formLogin(Customizer.withDefaults())
-            .csrf(AbstractHttpConfigurer::disable);
-
+            .csrf(csrf -> csrf.disable());
         return httpSecurity.build();
     }
 

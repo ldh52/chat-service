@@ -2,8 +2,8 @@ package kr.co.yahopet.chatservice.services;
 
 import kr.co.yahopet.chatservice.dtos.ChatroomDto;
 import kr.co.yahopet.chatservice.dtos.MemberDto;
-import kr.co.yahopet.chatservice.entity.Chatroom;
-import kr.co.yahopet.chatservice.entity.Member;
+import kr.co.yahopet.chatservice.entities.Chatroom;
+import kr.co.yahopet.chatservice.entities.Member;
 import kr.co.yahopet.chatservice.enums.Role;
 import kr.co.yahopet.chatservice.repositories.ChatroomRepository;
 import kr.co.yahopet.chatservice.repositories.MemberRepository;

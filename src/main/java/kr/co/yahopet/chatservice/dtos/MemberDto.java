@@ -1,7 +1,7 @@
 package kr.co.yahopet.chatservice.dtos;
 
 import java.time.LocalDate;
-import kr.co.yahopet.chatservice.entity.Member;
+import kr.co.yahopet.chatservice.entities.Member;
 import kr.co.yahopet.chatservice.enums.Gender;
 
 public record MemberDto(
@@ -43,6 +43,4 @@ public record MemberDto(
             .role(memberDto.role())
             .build();
     }
-
-
 }

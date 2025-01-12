@@ -1,4 +1,4 @@
-package kr.co.yahopet.chatservice.entity;
+package kr.co.yahopet.chatservice.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
