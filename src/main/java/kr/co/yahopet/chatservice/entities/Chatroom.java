@@ -23,27 +23,23 @@ import lombok.Setter;
 @Entity
 public class Chatroom {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chatroom_id")
-    @Id
-    Long id;
+    private Long id; // private 접근 제어자 추가
 
-    String title;
+    private String title; // private 접근 제어자 추가
 
     @OneToMany(mappedBy = "chatroom")
-    Set<MemberChatroomMapping> memberChatroomMappingSet;
+    private Set<MemberChatroomMapping> memberChatroomMappingSet = new HashSet<>(); // 초기화
 
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt; // private 접근 제어자 추가
 
     @Setter
     @Transient
-    Boolean hasNewMessage;
+    private Boolean hasNewMessage; // private 접근 제어자 추가
 
     public MemberChatroomMapping addMember(Member member) {
-        if (this.getMemberChatroomMappingSet() == null) {
-            this.memberChatroomMappingSet = new HashSet<>();
-        }
-
         MemberChatroomMapping memberChatroomMapping = MemberChatroomMapping.builder()
             .member(member)
             .chatroom(this)

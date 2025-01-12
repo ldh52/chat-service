@@ -22,20 +22,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Entity
 public class Member {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    @Id
-    long id;
+    private long id;
 
-    String email;
-    String nickName;
-    String name;
-    String password;
+    private String email;
+    private String nickName;
+    private String name;
+    private String password;
     @Enumerated(EnumType.STRING)
-    Gender gender;
-    String phoneNumber;
-    LocalDate birthDay;
-    String role;
+    private Gender gender;
+    private String phoneNumber;
+    private LocalDate birthday;
+    private String role;
 
     public void updatePassword(String password, String confirmPassword,
         PasswordEncoder passwordEncoder) {

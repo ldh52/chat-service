@@ -1,5 +1,6 @@
 package kr.co.yahopet.chatservice.services;
 
+import java.util.Optional;
 import kr.co.yahopet.chatservice.dtos.ChatroomDto;
 import kr.co.yahopet.chatservice.dtos.MemberDto;
 import kr.co.yahopet.chatservice.entities.Chatroom;
@@ -30,7 +31,13 @@ public class ConsultantService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByName(username).get();
+        Optional<Member> optionalMember = memberRepository.findByName(username);
+
+        if (optionalMember.isEmpty()) {
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
+        }
+
+        Member member = optionalMember.get();
 
         if (Role.fromCode(member.getRole()) != Role.CONSULTANT) {
             throw new AccessDeniedException("상담사가 아닙니다.");
@@ -47,7 +54,7 @@ public class ConsultantService implements UserDetailsService {
         return MemberDto.from(member);
     }
 
-    public Page<ChatroomDto> getChatrooPage(Pageable pageable) {
+    public Page<ChatroomDto> getChatroomPage(Pageable pageable) {
         Page<Chatroom> chatroomPage = chatroomRepository.findAll(pageable);
 
         return chatroomPage.map(ChatroomDto::from);

@@ -9,12 +9,14 @@ import lombok.Getter;
 public enum Role {
     USER("ROLE_USER"), CONSULTANT("ROLE_CONSULTANT");
 
-    String code;
+    //    String code;
+    private final String code; // private으로 설정
 
     public static Role fromCode(String code) {
         return Arrays.stream(Role.values())
             .filter(r -> r.getCode().equals(code))
             .findFirst()
-            .orElseThrow();
+            .orElseThrow(
+                () -> new IllegalArgumentException("Invalid role code: " + code)); // 커스텀 예외 메시지
     }
 }

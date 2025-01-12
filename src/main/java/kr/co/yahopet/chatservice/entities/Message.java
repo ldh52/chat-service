@@ -1,5 +1,6 @@
 package kr.co.yahopet.chatservice.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,21 +20,22 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Message {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "message_id")
     @Id
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @JoinColumn(name = "message_id")
+    @Column(name = "message_id") // message_id 컬럼 이름을 명시적으로 지정
+    private Long id;
 
-    String text;
+    private String text;
 
     @JoinColumn(name = "member_id")
     @ManyToOne
-    Member member;
+    private Member member;
 
     @JoinColumn(name = "chatroom_id")
     @ManyToOne
-    Chatroom chatroom;
+    private Chatroom chatroom;
 
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
 }

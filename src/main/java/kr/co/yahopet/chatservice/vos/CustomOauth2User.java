@@ -10,11 +10,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @AllArgsConstructor
+@Getter // @Getter를 클래스에 추가하여 모든 필드에 대한 getter를 자동 생성
 public class CustomOauth2User implements OAuth2User {
 
-    @Getter
-    Member member;
-    Map<String, Object> attributeMap;
+    private final Member member;
+    private final Map<String, Object> attributeMap;
 
     @Override
     public Map<String, Object> getAttributes() {

@@ -29,6 +29,7 @@ public class StompChatController {
     public ChatMessage handleMessage(Principal principal, @DestinationVariable Long chatroomId,
         @Payload Map<String, String> payload) {
         log.info("{} sent {} in {}", principal.getName(), payload, chatroomId);
+
         CustomOauth2User user = (CustomOauth2User) ((AbstractAuthenticationToken) principal).getPrincipal();
         Message message = chatService.saveMessage(user.getMember(), chatroomId,
             payload.get("message"));
