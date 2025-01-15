@@ -3,7 +3,7 @@ docker pull mysql
 
 # mysql 이미지 실행하기
 {}안의 내용은 원하는 경우, 변경하시거나, {}를 제거하고 그대로 사용하시면 됩니다.<br>
-// docker run -dp {3308}:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true -v {~/Workplaces/data/chat-service}:/var/lib/mysql --name=chat-service mysql:latest --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci <br>
+// docker run -dp {3308}:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true -v {~/Workplaces/data/chat-service}:/var/lib/mysql --name=chat-service mysql:latest --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci <br><br>
 docker run -dp 3308:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true -v ~/Workplaces/data/chat-service:/var/lib/mysql --name=chat-service mysql:latest --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
 # 실행된 도커 컨테이너로 들어갑니다.
