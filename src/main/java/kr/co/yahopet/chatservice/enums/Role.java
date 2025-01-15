@@ -1,22 +1,25 @@
 package kr.co.yahopet.chatservice.enums;
 
 import java.util.Arrays;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
 public enum Role {
+
     USER("ROLE_USER"), CONSULTANT("ROLE_CONSULTANT");
 
-    //    String code;
-    private final String code; // private으로 설정
+    String code;
+
+    Role(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
 
     public static Role fromCode(String code) {
         return Arrays.stream(Role.values())
-            .filter(r -> r.getCode().equals(code))
+            .filter(role -> role.getCode().equals(code))
             .findFirst()
-            .orElseThrow(
-                () -> new IllegalArgumentException("Invalid role code: " + code)); // 커스텀 예외 메시지
+            .orElseThrow();
     }
 }

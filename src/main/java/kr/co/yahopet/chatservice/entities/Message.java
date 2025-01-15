@@ -20,22 +20,20 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Message {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @JoinColumn(name = "message_id")
-    @Column(name = "message_id") // message_id 컬럼 이름을 명시적으로 지정
-    private Long id;
+    @Column(name = "message_id")
+    @Id
+    Long id;
 
-    private String text;
+    String text;
 
     @JoinColumn(name = "member_id")
     @ManyToOne
-    private Member member;
+    Member member;
 
     @JoinColumn(name = "chatroom_id")
     @ManyToOne
-    private Chatroom chatroom;
+    Chatroom chatroom;
 
-    private LocalDateTime createdAt;
-
+    LocalDateTime createdAt;
 }

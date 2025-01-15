@@ -6,7 +6,7 @@ import kr.co.yahopet.chatservice.dtos.ChatroomDto;
 import kr.co.yahopet.chatservice.entities.Chatroom;
 import kr.co.yahopet.chatservice.entities.Message;
 import kr.co.yahopet.chatservice.services.ChatService;
-import kr.co.yahopet.chatservice.vos.CustomOauth2User;
+import kr.co.yahopet.chatservice.vos.CustomOAuth2User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +27,7 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping
-    public ChatroomDto createChatroom(@AuthenticationPrincipal CustomOauth2User user,
+    public ChatroomDto createChatroom(@AuthenticationPrincipal CustomOAuth2User user,
         @RequestParam String title) {
         Chatroom chatroom = chatService.createChatroom(user.getMember(), title);
 
@@ -35,19 +35,19 @@ public class ChatController {
     }
 
     @PostMapping("/{chatroomId}")
-    public boolean joinChatroom(@AuthenticationPrincipal CustomOauth2User user,
+    public Boolean joinChatroom(@AuthenticationPrincipal CustomOAuth2User user,
         @PathVariable Long chatroomId, @RequestParam(required = false) Long currentChatroomId) {
         return chatService.joinChatroom(user.getMember(), chatroomId, currentChatroomId);
     }
 
     @DeleteMapping("/{chatroomId}")
-    public boolean leaveChatroom(@AuthenticationPrincipal CustomOauth2User user,
+    public Boolean leaveChatroom(@AuthenticationPrincipal CustomOAuth2User user,
         @PathVariable Long chatroomId) {
         return chatService.leaveChatroom(user.getMember(), chatroomId);
     }
 
     @GetMapping
-    public List<ChatroomDto> chatroomList(@AuthenticationPrincipal CustomOauth2User user) {
+    public List<ChatroomDto> getChatroomList(@AuthenticationPrincipal CustomOAuth2User user) {
         List<Chatroom> chatroomList = chatService.getChatroomList(user.getMember());
 
         return chatroomList.stream()

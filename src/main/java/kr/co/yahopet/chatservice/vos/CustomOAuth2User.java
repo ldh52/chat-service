@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.Map;
 import kr.co.yahopet.chatservice.entities.Member;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @AllArgsConstructor
-@Getter // @Getter를 클래스에 추가하여 모든 필드에 대한 getter를 자동 생성
-public class CustomOauth2User implements OAuth2User {
+public class CustomOAuth2User implements OAuth2User {
 
-    private final Member member;
-    private final Map<String, Object> attributeMap;
+    Member member;
+    Map<String, Object> attributeMap;
+
+    public Member getMember() {
+        return this.member;
+    }
 
     @Override
     public Map<String, Object> getAttributes() {

@@ -19,7 +19,9 @@ public class SecurityConfiguration {
         httpSecurity
             .authorizeHttpRequests(request -> request.anyRequest().authenticated())
             .oauth2Login(Customizer.withDefaults())
+            .formLogin(Customizer.withDefaults())
             .csrf(csrf -> csrf.disable());
+
         return httpSecurity.build();
     }
 
@@ -28,13 +30,13 @@ public class SecurityConfiguration {
     public SecurityFilterChain consultantSecurityFilterChain(HttpSecurity httpSecurity)
         throws Exception {
         httpSecurity
-            .securityMatcher("/consultants/**", "/login")
+            .securityMatcher("/consultants/**")
             .authorizeHttpRequests(request -> request
                 .requestMatchers(HttpMethod.POST, "/consultants").permitAll()
-                .anyRequest().hasRole("CONSULTANT")
-            )
+                .anyRequest().hasRole("CONSULTANT"))
             .formLogin(Customizer.withDefaults())
             .csrf(csrf -> csrf.disable());
+
         return httpSecurity.build();
     }
 

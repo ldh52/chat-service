@@ -7,12 +7,12 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-@Configuration
-@EnableWebSocket
 @RequiredArgsConstructor
+@EnableWebSocket
+@Configuration
 public class WebSocketConfiguration implements WebSocketConfigurer {
 
-    private final WebSocketChatHandler webSocketChatHandler;
+    final WebSocketChatHandler webSocketChatHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {

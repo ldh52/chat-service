@@ -5,36 +5,27 @@ const stompClient = new StompJs.Client({
 stompClient.onConnect = (frame) => {
   setConnected(true);
   showChatrooms(0);
-  stompClient.subscribe('/sub/chats/updates', (chatMessage) => {
-    try {
-      const messageData = JSON.parse(chatMessage.body);
-      toggleNewMessageIcon(messageData.id, true);
-      updateMemberCount(messageData);
-    } catch (error) {
-      console.error('Error parsing chat message:', error);
-    }
-  });
+  stompClient.subscribe('/sub/chats/updates',
+      (chatMessage) => {
+        toggleNewMessageIcon(JSON.parse(chatMessage.body).id, true);
+        updateMemberCount(JSON.parse(chatMessage.body));
+      });
   console.log('Connected: ' + frame);
 };
 
 function toggleNewMessageIcon(chatroomId, toggle) {
-  if (chatroomId === $("#chatroom-id").val()) {
+  if (chatroomId == $("#chatroom-id").val()) {
     return;
   }
-
-  const newMessageIcon = $("#new_" + chatroomId);
   if (toggle) {
-    newMessageIcon.show();
+    $("#new_" + chatroomId).show();
   } else {
-    newMessageIcon.hide();
+    $("#new_" + chatroomId).hide();
   }
 }
 
 function updateMemberCount(chatroom) {
-  const memberCountElement = $("#memberCount_" + chatroom.id);
-  if (memberCountElement.length) {
-    memberCountElement.html(chatroom.memberCount);
-  }
+  $("#memberCount_" + chatroom.id).html(chatroom.memberCount);
 }
 
 stompClient.onWebSocketError = (error) => {
@@ -63,39 +54,30 @@ function disconnect() {
 }
 
 function sendMessage() {
-  const chatroomId = $("#chatroom-id").val();
-  const message = $("#message").val();
-  if (message.trim() === "") {
-    alert("Message cannot be empty");
-    return;
-  }
+  let chatroomId = $("#chatroom-id").val();
   stompClient.publish({
     destination: "/pub/chats/" + chatroomId,
-    body: JSON.stringify({'message': message})
+    body: JSON.stringify(
+        {'message': $("#message").val()})
   });
-  $("#message").val("");
+  $("#message").val("")
 }
 
 function createChatroom() {
-  const title = $("#chatroom-title").val();
-  if (title.trim() === "") {
-    alert("Chatroom title cannot be empty");
-    return;
-  }
   $.ajax({
     type: 'POST',
     dataType: 'json',
-    url: '/chats?title=' + encodeURIComponent(title),
+    url: '/chats?title=' + $("#chatroom-title").val(),
     success: function (data) {
       console.log('data: ', data);
       showChatrooms(0);
       enterChatroom(data.id, true);
     },
     error: function (request, status, error) {
-      console.error('Error creating chatroom:', error);
-      alert('Failed to create chatroom. Please try again.');
+      console.log('request: ', request);
+      console.log('error: ', error);
     },
-  });
+  })
 }
 
 function showChatrooms(pageNumber) {
@@ -108,14 +90,14 @@ function showChatrooms(pageNumber) {
       renderChatrooms(data);
     },
     error: function (request, status, error) {
-      console.error('Error fetching chatrooms:', error);
-      alert('Failed to load chatrooms. Please try again.');
+      console.log('request: ', request);
+      console.log('error: ', error);
     },
-  });
+  })
 }
 
 function renderChatrooms(page) {
-  const chatrooms = page.content;
+  let chatrooms = page.content;
   $("#chatroom-list").html("");
   for (let i = 0; i < chatrooms.length; i++) {
     $("#chatroom-list").append(
@@ -129,21 +111,27 @@ function renderChatrooms(page) {
     );
   }
 
-  $("#prev").prop("disabled", page.first).off('click').click(() => {
-    if (!page.first) {
-      showChatrooms(page.number - 1);
-    }
-  });
+  if (page.first) {
+    $("#prev").prop("disabled", true);
+  } else {
+    $("#prev").prop("disabled", false).click(
+        () => showChatrooms(page.number - 1));
+  }
 
-  $("#next").prop("disabled", page.last).off('click').click(() => {
-    if (!page.last) {
-      showChatrooms(page.number + 1);
-    }
-  });
+  if (page.last) {
+    $("#next").prop("disabled", true);
+  } else {
+    $("#next").prop("disabled", false).click(
+        () => showChatrooms(page.number + 1));
+  }
 }
 
 function getDisplayValue(hasNewMessage) {
-  return hasNewMessage ? "inline" : "none";
+  if (hasNewMessage) {
+    return "inline";
+  }
+
+  return "none";
 }
 
 let subscription;
@@ -151,13 +139,13 @@ let subscription;
 function enterChatroom(chatroomId, newMember) {
   $("#chatroom-id").val(chatroomId);
   $("#messages").html("");
-  showMessages(chatroomId); // showMessages 함수가 정의되어 있어야 합니다.
+  showMessages(chatroomId);
   $("#conversation").show();
   $("#send").prop("disabled", false);
   $("#leave").prop("disabled", false);
   toggleNewMessageIcon(chatroomId, false);
 
-  if (subscription) {
+  if (subscription != undefined) {
     subscription.unsubscribe();
   }
 
@@ -169,34 +157,34 @@ function enterChatroom(chatroomId, newMember) {
   if (newMember) {
     stompClient.publish({
       destination: "/pub/chats/" + chatroomId,
-      body: JSON.stringify({'message': "님이 방에 들어왔습니다."})
-    });
+      body: JSON.stringify(
+          {'message': "님이 방에 들어왔습니다."})
+    })
   }
 }
 
-function showMessages(chatRoomId) {
+function showMessages(chatroomId) {
   $.ajax({
     type: 'GET',
     dataType: 'json',
-    url: '/chats/' + chatRoomId + '/messages',
+    url: '/chats/' + chatroomId + '/messages',
     success: function (data) {
       console.log('data: ', data);
       for (let i = 0; i < data.length; i++) {
-        showMessage(data[i]); // 수정된 부분
+        showMessage(data[i]);
       }
     },
     error: function (request, status, error) {
-      console.error('Error fetching messages:', error);
-      alert('Failed to load messages. Please try again.');
+      console.log('request: ', request);
+      console.log('error: ', error);
     },
-  });
+  })
 }
 
 function showMessage(chatMessage) {
   $("#messages").append(
       "<tr><td>" + chatMessage.sender + " : " + chatMessage.message
-      + "</td></tr>"
-  );
+      + "</td></tr>");
 }
 
 function joinChatroom(chatroomId) {
@@ -211,14 +199,18 @@ function joinChatroom(chatroomId) {
       enterChatroom(chatroomId, data);
     },
     error: function (request, status, error) {
-      console.error('Error joining chatroom:', error);
-      alert('Failed to join chatroom. Please try again.');
+      console.log('request: ', request);
+      console.log('error: ', error);
     },
-  });
+  })
 }
 
 function getRequestParam(currentChatroomId) {
-  return currentChatroomId ? "?currentChatroomId=" + currentChatroomId : "";
+  if (currentChatroomId == "") {
+    return "";
+  }
+
+  return "?currentChatroomId=" + currentChatroomId;
 }
 
 function leaveChatroom() {
@@ -233,10 +225,10 @@ function leaveChatroom() {
       exitChatroom(chatroomId);
     },
     error: function (request, status, error) {
-      console.error('Error leaving chatroom:', error);
-      alert('Failed to leave chatroom. Please try again.');
+      console.log('request: ', request);
+      console.log('error: ', error);
     },
-  });
+  })
 }
 
 function exitChatroom(chatroomId) {
@@ -252,12 +244,5 @@ $(function () {
   $("#disconnect").click(() => disconnect());
   $("#create").click(() => createChatroom());
   $("#leave").click(() => leaveChatroom());
-  $("#send").click(() => {
-    const message = $("#message").val();
-    if (message.trim() === "") {
-      alert("Message cannot be empty");
-      return;
-    }
-    sendMessage();
-  });
+  $("#send").click(() => sendMessage());
 });

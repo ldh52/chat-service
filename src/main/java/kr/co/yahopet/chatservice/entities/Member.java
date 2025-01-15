@@ -22,25 +22,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Entity
 public class Member {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private long id;
+    @Id
+    Long id;
 
-    private String email;
-    private String nickName;
-    private String name;
-    private String password;
+    String email;
+    String nickName;
+    String name;
+    String password;
     @Enumerated(EnumType.STRING)
-    private Gender gender;
-    private String phoneNumber;
-    private LocalDate birthday;
-    private String role;
+    Gender gender;
+    String phoneNumber;
+    LocalDate birthDay;
+    String role;
 
-    public void updatePassword(String password, String confirmPassword,
+    public void updatePassword(String password, String confirmedPassword,
         PasswordEncoder passwordEncoder) {
-        if (!password.equals(confirmPassword)) {
-            throw new IllegalArgumentException("Passwords don't match");
+        if (!password.equals(confirmedPassword)) {
+            throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
         }
 
         this.password = passwordEncoder.encode(password);

@@ -9,7 +9,7 @@ Content-Type: application/json
   "password": "password",
   "confirmedPassword": "password",
   "gender": "MALE",
-  "phoneNumber": "801012345678",
+  "phoneNumber": "821012345678",
   "birthday": "2000-01-01",
   "role": "ROLE_CONSULTANT"
 }

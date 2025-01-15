@@ -26,7 +26,7 @@ public record MemberDto(
             null,
             member.getGender(),
             member.getPhoneNumber(),
-            member.getBirthday(),
+            member.getBirthDay(),
             member.getRole()
         );
     }
@@ -39,7 +39,7 @@ public record MemberDto(
             .name(memberDto.name())
             .gender(memberDto.gender())
             .phoneNumber(memberDto.phoneNumber())
-            .birthday(memberDto.birthday())
+            .birthDay(memberDto.birthday())
             .role(memberDto.role())
             .build();
     }

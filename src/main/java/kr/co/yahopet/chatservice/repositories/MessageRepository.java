@@ -10,5 +10,4 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findAllByChatroomId(Long chatroomId);
 
     Boolean existsByChatroomIdAndCreatedAtAfter(Long chatroomId, LocalDateTime createdAt);
-
 }

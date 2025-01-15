@@ -2,7 +2,6 @@ package kr.co.yahopet.chatservice.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import kr.co.yahopet.chatservice.dtos.ChatroomDto;
 import kr.co.yahopet.chatservice.entities.Chatroom;
 import kr.co.yahopet.chatservice.entities.Member;
@@ -33,12 +32,9 @@ public class ChatService {
 
         chatroom = chatroomRepository.save(chatroom);
 
-        MemberChatroomMapping memberChatroomMapping = MemberChatroomMapping.builder()
-            .member(member)
-            .chatroom(chatroom)
-            .build();
+        MemberChatroomMapping memberChatroomMapping = chatroom.addMember(member);
 
-        memberChatroomMappingRepository.save(memberChatroomMapping);
+        memberChatroomMapping = memberChatroomMappingRepository.save(memberChatroomMapping);
 
         return chatroom;
     }
@@ -54,35 +50,25 @@ public class ChatService {
             return false;
         }
 
-        Optional<Chatroom> optionalChatroom = chatroomRepository.findById(newChatroomId);
-        if (optionalChatroom.isEmpty()) {
-            log.warn("채팅방을 찾을 수 없습니다: {}", newChatroomId);
-            return false;
-        }
-
-        Chatroom chatroom = optionalChatroom.get();
+        Chatroom chatroom = chatroomRepository.findById(newChatroomId).get();
 
         MemberChatroomMapping memberChatroomMapping = MemberChatroomMapping.builder()
             .member(member)
             .chatroom(chatroom)
             .build();
 
-        memberChatroomMappingRepository.save(memberChatroomMapping);
+        memberChatroomMapping = memberChatroomMappingRepository.save(memberChatroomMapping);
 
         return true;
     }
 
     private void updateLastCheckedAt(Member member, Long currentChatroomId) {
-        Optional<MemberChatroomMapping> optionalMapping = memberChatroomMappingRepository
-            .findByMemberIdAndChatroomId(member.getId(), currentChatroomId);
+        MemberChatroomMapping memberChatroomMapping = memberChatroomMappingRepository.findByMemberIdAndChatroomId(
+                member.getId(), currentChatroomId)
+            .get();
+        memberChatroomMapping.updateLastCheckedAt();
 
-        if (optionalMapping.isPresent()) {
-            MemberChatroomMapping memberChatroomMapping = optionalMapping.get();
-            memberChatroomMapping.updateLastCheckedAt();
-            memberChatroomMappingRepository.save(memberChatroomMapping);
-        } else {
-            log.warn("참여하지 않은 채팅방입니다: {}", currentChatroomId);
-        }
+        memberChatroomMappingRepository.save(memberChatroomMapping);
     }
 
     @Transactional
@@ -94,11 +80,12 @@ public class ChatService {
         }
 
         memberChatroomMappingRepository.deleteByMemberIdAndChatroomId(member.getId(), chatroomId);
+
         return true;
     }
 
     public List<Chatroom> getChatroomList(Member member) {
-        List<MemberChatroomMapping> memberChatroomMappingList = memberChatroomMappingRepository.findByMemberId(
+        List<MemberChatroomMapping> memberChatroomMappingList = memberChatroomMappingRepository.findAllByMemberId(
             member.getId());
 
         return memberChatroomMappingList.stream()
@@ -113,13 +100,7 @@ public class ChatService {
     }
 
     public Message saveMessage(Member member, Long chatroomId, String text) {
-        Optional<Chatroom> optionalChatroom = chatroomRepository.findById(chatroomId);
-        if (optionalChatroom.isEmpty()) {
-            log.warn("채팅방을 찾을 수 없습니다: {}", chatroomId);
-            return null; // 또는 예외를 던질 수 있습니다.
-        }
-
-        Chatroom chatroom = optionalChatroom.get();
+        Chatroom chatroom = chatroomRepository.findById(chatroomId).get();
 
         Message message = Message.builder()
             .text(text)
@@ -137,13 +118,8 @@ public class ChatService {
 
     @Transactional(readOnly = true)
     public ChatroomDto getChatroom(Long chatroomId) {
-        Optional<Chatroom> optionalChatroom = chatroomRepository.findById(chatroomId);
-        if (optionalChatroom.isEmpty()) {
-            log.warn("채팅방을 찾을 수 없습니다: {}", chatroomId);
-            return null; // 또는 예외를 던질 수 있습니다.
-        }
+        Chatroom chatroom = chatroomRepository.findById(chatroomId).get();
 
-        Chatroom chatroom = optionalChatroom.get();
         return ChatroomDto.from(chatroom);
     }
 }

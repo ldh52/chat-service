@@ -18,7 +18,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("{} Connected", session.getId());
+        log.info("{} connected", session.getId());
 
         this.webSocketSessionMap.put(session.getId(), session);
     }
@@ -42,7 +42,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status)
         throws Exception {
-        log.info("{} Disconnected", session.getId());
+        log.info("{} disconnected", session.getId());
 
         this.webSocketSessionMap.remove(session.getId());
     }

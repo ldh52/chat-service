@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Consultants</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -14,10 +12,10 @@
   <script src="/consultants/stomp.js"></script>
 </head>
 <body>
-<noscript>
-  <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies
-    on Javascript being enabled. Please enable Javascript and reload this page!</h2>
-</noscript>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies
+  on Javascript being
+  enabled. Please enable
+  Javascript and reload this page!</h2></noscript>
 <div id="main-content" class="container">
   <div class="row">
     <div class="col-md-6">
@@ -36,10 +34,10 @@
     <div class="col-md-12">
       <form class="form-inline">
         <div class="form-group">
-          <label for="chatroom_id">Chatroom</label>
-          <input type="text" id="chatroom_id" class="form-control" disabled="disabled"
-                 placeholder="Chatroom id">
-          <input type="text" id="chatroom_title" class="form-control" placeholder="Chatroom title">
+          <label for="create">Chatroom</label>
+          <input type="text" id="chatroom-id" class="form-control" disabled="disabled"
+                 placeholder="chatroom id">
+          <input type="text" id="chatroom-title" class="form-control" placeholder="chatroom title">
         </div>
         <button id="create" class="btn btn-default" disabled="disabled" type="button">Create
         </button>
@@ -66,7 +64,7 @@
     <div class="col-md-12">
       <form class="form-inline">
         <div class="form-group">
-          <label for="message">Message</label>
+          <label for="send">Message</label>
           <input type="text" id="message" class="form-control" placeholder="message to send">
         </div>
         <button id="send" class="btn btn-default" disabled="disabled" type="button">Send</button>

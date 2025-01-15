@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Users</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -14,10 +12,10 @@
   <script src="/stomp.js"></script>
 </head>
 <body>
-<noscript>
-  <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies
-    on Javascript being enabled. Please enable Javascript and reload this page!</h2>
-</noscript>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies
+  on Javascript being
+  enabled. Please enable
+  Javascript and reload this page!</h2></noscript>
 <div id="main-content" class="container">
   <div class="row">
     <div class="col-md-6">
@@ -55,7 +53,8 @@
           <th>Chatrooms</th>
         </tr>
         </thead>
-        <tbody id="chatroom-list"></tbody>
+        <tbody id="chatroom-list">
+        </tbody>
       </table>
     </div>
   </div>
@@ -78,7 +77,8 @@
           <th>Messages</th>
         </tr>
         </thead>
-        <tbody id="messages"></tbody>
+        <tbody id="messages">
+        </tbody>
       </table>
     </div>
   </div>
